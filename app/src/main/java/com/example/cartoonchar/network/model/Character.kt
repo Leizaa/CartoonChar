@@ -1,5 +1,6 @@
 package com.example.cartoonchar.network.model
 
 data class Character(
-    val id: Int
+    val id: Int,
+    val name: String
 )
