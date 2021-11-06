@@ -2,12 +2,25 @@ package com.example.cartoonchar.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagingData
+import com.example.cartoonchar.network.CharacterRepository
+import com.example.cartoonchar.network.model.Character
+import kotlinx.coroutines.flow.Flow
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val repository: CharacterRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    val pagingDataFlow: Flow<PagingData<Character>>
+
+    init {
+        pagingDataFlow = getCharacterPaging()
     }
-    val text: LiveData<String> = _text
+
+    private fun getCharacterPaging(): Flow<PagingData<Character>> =
+        repository.getCartoon()
 }
+
