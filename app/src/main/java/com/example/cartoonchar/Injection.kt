@@ -1,17 +1,17 @@
 package com.example.cartoonchar
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.savedstate.SavedStateRegistryOwner
 import com.example.cartoonchar.network.CartoonService
-import com.example.cartoonchar.network.CharacterRepository
-import com.example.cartoonchar.ui.ViewModelFactory
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@Module
+@InstallIn(SingletonComponent::class)
 object Injection {
-    private fun provideCharacterRepository(): CharacterRepository {
-        return CharacterRepository(CartoonService.create())
-    }
 
-    fun provideViewModelFactory(owner: SavedStateRegistryOwner): ViewModelProvider.Factory{
-        return ViewModelFactory(owner, provideCharacterRepository())
+    @Provides
+    fun provideCartoonService(): CartoonService {
+        return CartoonService.create()
     }
 }

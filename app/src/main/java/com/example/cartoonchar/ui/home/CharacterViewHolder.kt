@@ -15,7 +15,7 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.character_name)
     private val status: TextView = view.findViewById(R.id.character_status)
     private val lastSeenLocation: TextView = view.findViewById(R.id.location_text_view)
-    private val firstSeenLocation: TextView = view.findViewById(R.id.seen_label)
+    private val firstSeenLocation: TextView = view.findViewById(R.id.first_seen_text_view)
 
     private val characterImage: ImageView = view.findViewById(R.id.character_image)
 

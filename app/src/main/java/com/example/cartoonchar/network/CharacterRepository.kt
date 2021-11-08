@@ -5,8 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.cartoonchar.network.model.Character
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class CharacterRepository(private val service: CartoonService) {
+class CharacterRepository @Inject constructor(private val service: CartoonService) {
     fun getCartoon(): Flow<PagingData<Character>> {
         return Pager(
             config = PagingConfig(
