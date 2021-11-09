@@ -1,7 +1,6 @@
-package com.example.cartoonchar.ui.home
+package com.example.cartoonchar.ui.location
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,22 +11,24 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cartoonchar.databinding.FragmentHomeBinding
-import com.example.cartoonchar.network.model.Character
+import com.example.cartoonchar.databinding.FragmentLocationBinding
+import com.example.cartoonchar.network.model.Location
+import com.example.cartoonchar.ui.location.recyclerview.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class LocationFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by viewModels()
-
-    private var _binding: FragmentHomeBinding? = null
+    private val locationViewModel: LocationViewModel by viewModels()
+    private var _binding: FragmentLocationBinding? = null
+    private lateinit var recyclerView: RecyclerView
 
     private lateinit var decorator: DividerItemDecoration
-
-    private lateinit var recyclerView: RecyclerView
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -38,36 +39,34 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        _binding = FragmentLocationBinding.inflate(inflater, container, false)
         val root: View = binding.root
         decorator = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
 
         recyclerView = binding.mainRecyclerView
         recyclerView.addItemDecoration(decorator)
 
-        Log.d("test","test")
-
         bindScroll(
-            pagingData = homeViewModel.pagingDataFlow
+            pagingData = locationViewModel.pagingDataLocationFlow
         )
-
         return root
     }
 
     private fun bindScroll(
-        pagingData: Flow<PagingData<Character>>
+        pagingData: Flow<PagingData<Location>>
     ) {
-        val characterAdapter = CharacterAdapter()
-        recyclerView.adapter = characterAdapter
+        val locationAdapter = LocationAdapter()
+        recyclerView.adapter = locationAdapter
 
-        val notLoading = characterAdapter.loadStateFlow
+        val notLoading = locationAdapter.loadStateFlow
             // Only emit when REFRESH LoadState for the paging source changes.
             .distinctUntilChangedBy { it.source.refresh }
             // Only react to cases where REFRESH completes i.e., NotLoading.
             .map { it.source.refresh is LoadState.NotLoading }
 
         lifecycleScope.launch {
-            pagingData.collectLatest(characterAdapter::submitData)
+            pagingData.collectLatest(locationAdapter::submitData)
         }
     }
 
@@ -75,5 +74,4 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

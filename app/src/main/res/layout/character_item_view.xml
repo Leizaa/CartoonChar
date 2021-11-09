@@ -48,10 +48,13 @@
 
     <TextView
         android:id="@+id/location_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/location_label"
         app:layout_constraintTop_toBottomOf="@id/location_label"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/black"
         tools:text="Jakarta"/>
 
@@ -66,12 +69,15 @@
 
     <TextView
         android:id="@+id/first_seen_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/seen_label"
         app:layout_constraintTop_toBottomOf="@id/seen_label"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/black"
-        tools:text="Jakarta"/>
+        tools:text="Jakarta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

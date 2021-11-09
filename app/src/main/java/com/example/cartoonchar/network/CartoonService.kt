@@ -1,10 +1,7 @@
 package com.example.cartoonchar.network
 
-import com.example.cartoonchar.MainApplication
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
+import com.example.cartoonchar.network.character.CharacterResponse
+import com.example.cartoonchar.network.location.LocationResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,6 +15,11 @@ interface CartoonService {
     suspend fun getCharacter(
         @Query("page") page: Int
     ): CharacterResponse
+
+    @GET("location")
+    suspend fun getLocation(
+        @Query("page") page: Int
+    ): LocationResponse
 
     companion object {
 
