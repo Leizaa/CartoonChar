@@ -1,4 +1,4 @@
-package com.example.cartoonchar.network
+package com.example.cartoonchar.network.character
 
 import com.example.cartoonchar.network.model.Character
 import com.example.cartoonchar.network.model.Info

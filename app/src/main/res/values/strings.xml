@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">CartoonChar</string>
-    <string name="title_home">Home</string>
+    <string name="title_character">Character</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_location">Location</string>
     <string name="location_label">Last known location:</string>
     <string name="seen_label">First seen in:</string>
     <string name="loading">Loading</string>
     <string name="status_format">%s - %s</string>
     <string name="unknown">Unknown</string>
+
+    <string name="location_dimension">Dimension :</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.cartoonchar.ui.home
+package com.example.cartoonchar.ui.character.recylerview
 
 import android.view.LayoutInflater
 import android.view.View

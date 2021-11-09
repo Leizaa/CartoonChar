@@ -1,7 +1,8 @@
-package com.example.cartoonchar.network
+package com.example.cartoonchar.network.character
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.cartoonchar.network.CartoonService
 import com.example.cartoonchar.network.model.Character
 import java.io.IOException
 

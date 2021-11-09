@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.cartoonchar.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.example.cartoonchar.ui.character.CharacterFragment"
+        android:label="@string/title_character"
+        tools:layout="@layout/fragment_character" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.cartoonchar.ui.notifications.DetailFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_detail" />
+        android:name="com.example.cartoonchar.ui.location.LocationFragment"
+        android:label="@string/title_location"
+        tools:layout="@layout/fragment_location" />
 </navigation>
