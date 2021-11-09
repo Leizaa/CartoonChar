@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/character_image"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
+
+    <TextView
+        android:id="@+id/character_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/character_image"
+        app:layout_constraintTop_toTopOf="@id/character_image"
+        android:layout_marginStart="10dp"
+        tools:text="test name"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/character_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/character_name"
+        app:layout_constraintStart_toStartOf="@id/character_name"
+        tools:text="alive - unknown"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/character_status"
+        app:layout_constraintTop_toBottomOf="@id/character_status"
+        android:layout_marginTop="5dp"
+        android:text="@string/location_label"/>
+
+    <TextView
+        android:id="@+id/location_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/location_label"
+        app:layout_constraintTop_toBottomOf="@id/location_label"
+        android:textColor="@color/black"
+        tools:text="Jakarta"/>
+
+    <TextView
+        android:id="@+id/seen_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/location_text_view"
+        app:layout_constraintTop_toBottomOf="@id/location_text_view"
+        android:layout_marginTop="5dp"
+        android:text="@string/seen_label"/>
+
+    <TextView
+        android:id="@+id/first_seen_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/seen_label"
+        app:layout_constraintTop_toBottomOf="@id/seen_label"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        tools:text="Jakarta"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

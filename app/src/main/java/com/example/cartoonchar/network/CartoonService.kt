@@ -1,5 +1,10 @@
 package com.example.cartoonchar.network
 
+import com.example.cartoonchar.MainApplication
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,13 +13,15 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface CartoonService {
+
     @GET("character")
     suspend fun getCharacter(
         @Query("page") page: Int
     ): CharacterResponse
 
     companion object {
-        private const val BASE_URL = "https://rickandmortyapi.com/api"
+
+        private const val BASE_URL = "https://rickandmortyapi.com/api/"
 
         fun create(): CartoonService {
             val logger = HttpLoggingInterceptor()

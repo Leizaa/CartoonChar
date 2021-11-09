@@ -1,13 +1,25 @@
 package com.example.cartoonchar.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagingData
+import com.example.cartoonchar.network.CharacterRepository
+import com.example.cartoonchar.network.model.Character
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: CharacterRepository
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    val pagingDataFlow: Flow<PagingData<Character>>
+
+    init {
+        pagingDataFlow = getCharacterPaging()
     }
-    val text: LiveData<String> = _text
+
+    private fun getCharacterPaging(): Flow<PagingData<Character>> =
+        repository.getCartoon()
 }
+
