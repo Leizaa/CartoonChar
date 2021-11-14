@@ -23,14 +23,16 @@ class CartoonRepository @Inject constructor(private val service: CartoonService)
         ).flow
     }
 
-    fun getCartoonLocation(): Flow<PagingData<Location>> {
+    fun getCartoonLocation(query: String): Flow<PagingData<Location>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                LocationPagingSource(service)
+                LocationPagingSource(
+                    service = service, query = query
+                )
             }
         ).flow
     }
