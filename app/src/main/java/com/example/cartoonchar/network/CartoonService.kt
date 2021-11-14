@@ -18,6 +18,7 @@ interface CartoonService {
 
     @GET("location")
     suspend fun getLocation(
+        @Query("name") query: String,
         @Query("page") page: Int
     ): LocationResponse
 

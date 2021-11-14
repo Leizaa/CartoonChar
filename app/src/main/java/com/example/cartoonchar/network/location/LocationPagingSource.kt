@@ -4,19 +4,21 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.cartoonchar.network.CartoonService
 import com.example.cartoonchar.network.model.Location
+import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
 class LocationPagingSource(
-    private val service: CartoonService
+    private val service: CartoonService,
+    private val query: String
 ) : PagingSource<Int, Location>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Location> {
         val position = params.key ?: STARTING_PAGE_INDEX;
 
         return try {
-            val response = service.getLocation(position)
+            val response = service.getLocation(query, position)
             val locations = response.data
 
             val nextKey = if (locations.isEmpty()) {
@@ -31,7 +33,7 @@ class LocationPagingSource(
                 nextKey = nextKey
             )
 
-        } catch (exception: IOException) {
+        } catch (exception: Exception) {
             exception.printStackTrace()
             return LoadResult.Error(exception)
         }

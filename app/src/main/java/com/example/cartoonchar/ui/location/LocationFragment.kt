@@ -1,9 +1,11 @@
 package com.example.cartoonchar.ui.location
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,14 +17,14 @@ import com.example.cartoonchar.databinding.FragmentLocationBinding
 import com.example.cartoonchar.network.model.Location
 import com.example.cartoonchar.ui.location.recyclerview.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import com.example.cartoonchar.ui.location.LocationViewModel.UiAction;
+import com.example.cartoonchar.ui.location.LocationViewModel.UiState;
 
 @AndroidEntryPoint
 class LocationFragment : Fragment() {
+
 
     private val locationViewModel: LocationViewModel by viewModels()
     private var _binding: FragmentLocationBinding? = null
@@ -47,17 +49,56 @@ class LocationFragment : Fragment() {
         recyclerView = binding.mainRecyclerView
         recyclerView.addItemDecoration(decorator)
 
-        bindScroll(
-            pagingData = locationViewModel.pagingDataLocationFlow
+        binding.bindState(
+            uiState = locationViewModel.state,
+            pagingData = locationViewModel.pagingDataLocationFlow,
+            uiActions = locationViewModel.accept
         )
         return root
     }
 
-    private fun bindScroll(
-        pagingData: Flow<PagingData<Location>>
+    private fun FragmentLocationBinding.bindState(
+        uiState: StateFlow<UiState>,
+        pagingData: Flow<PagingData<Location>>,
+        uiActions: (UiAction) -> Unit
     ) {
         val locationAdapter = LocationAdapter()
         recyclerView.adapter = locationAdapter
+
+        bindSearch(
+            uiState = uiState,
+            onQueryChanged = uiActions
+        )
+
+        bindScroll(
+            locationAdapter = locationAdapter,
+            uiState = uiState,
+            pagingData = pagingData,
+            onScrollChanged = uiActions
+        )
+    }
+
+    private fun FragmentLocationBinding.updateRepoListFromInput(onQueryChanged: (UiAction.Search) -> Unit) {
+        searchRepo.text!!.trim().let {
+            if (it.isNotEmpty()) {
+                mainRecyclerView.scrollToPosition(0)
+                onQueryChanged(UiAction.Search(query = it.toString()))
+            }
+        }
+    }
+
+    private fun FragmentLocationBinding.bindScroll(
+        locationAdapter: LocationAdapter,
+        uiState: StateFlow<UiState>,
+        pagingData: Flow<PagingData<Location>>,
+        onScrollChanged: (UiAction.Scroll) -> Unit
+    ) {
+
+        mainRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy != 0) onScrollChanged(UiAction.Scroll(currentQuery = uiState.value.query))
+            }
+        })
 
         val notLoading = locationAdapter.loadStateFlow
             // Only emit when REFRESH LoadState for the paging source changes.
@@ -65,8 +106,54 @@ class LocationFragment : Fragment() {
             // Only react to cases where REFRESH completes i.e., NotLoading.
             .map { it.source.refresh is LoadState.NotLoading }
 
+        val hasNotScrolledForCurrentSearch = uiState
+            .map { it.hasNotScrolledForCurrentSearch }
+            .distinctUntilChanged()
+
+        val shouldScrollToTop = combine(
+            notLoading,
+            hasNotScrolledForCurrentSearch,
+            Boolean::and
+        )
+            .distinctUntilChanged()
+
         lifecycleScope.launch {
             pagingData.collectLatest(locationAdapter::submitData)
+        }
+
+        lifecycleScope.launch {
+            shouldScrollToTop.collect { shouldScroll ->
+                if (shouldScroll) mainRecyclerView.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun FragmentLocationBinding.bindSearch(
+        uiState: StateFlow<UiState>,
+        onQueryChanged: (UiAction.Search) -> Unit
+    ) {
+        searchRepo.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                updateRepoListFromInput(onQueryChanged)
+                true
+            } else {
+                false
+            }
+        }
+        searchRepo.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                updateRepoListFromInput(onQueryChanged)
+                true
+            } else {
+                false
+            }
+        }
+
+        lifecycleScope.launch {
+            uiState
+                .map { it.query }
+                .distinctUntilChanged()
+                .collect(searchRepo::setText)
         }
     }
 
