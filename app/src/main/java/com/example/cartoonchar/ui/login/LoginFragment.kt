@@ -6,8 +6,16 @@ import androidx.fragment.app.viewModels
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.cartoonchar.R
+import com.example.cartoonchar.SingletonTimer
 import com.example.cartoonchar.databinding.FragmentLoginBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+
+
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -23,9 +31,29 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        return root
+        binding.apply {
+            loginButton.setOnClickListener {
+                viewModel.login(
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString())
+            }
+        }
+
+        viewModel.snackbar.observe(viewLifecycleOwner){
+            Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
+        }
+
+        viewModel.loginStatus.observe(viewLifecycleOwner){
+            if (it) {
+                SingletonTimer.init()
+
+            }
+        }
     }
 }
