@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CartoonChar</string>
     <string name="title_character">Character</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_login">Log Out</string>
     <string name="title_location">Location</string>
     <string name="location_label">Last known location:</string>
     <string name="seen_label">First seen in:</string>
@@ -10,6 +10,10 @@
     <string name="unknown">Unknown</string>
     <string name="search_hint">Search</string>
     <string name="search_default">Earth</string>
+
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button_label">Login</string>
 
     <string name="location_dimension">Dimension :</string>
     <!-- TODO: Remove or change this placeholder text -->

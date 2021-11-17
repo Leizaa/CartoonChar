@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_login">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.cartoonchar.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_login"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
@@ -22,4 +22,9 @@
         android:name="com.example.cartoonchar.ui.location.LocationFragment"
         android:label="@string/title_location"
         tools:layout="@layout/fragment_location" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.cartoonchar.ui.login.LoginFragment"
+        tools:layout="@layout/fragment_login" /><action android:id="@+id/action_global_navigation_login" app:destination="@id/navigation_login"/><action android:id="@+id/action_global_navigation_home" app:destination="@id/navigation_home"/>
 </navigation>
