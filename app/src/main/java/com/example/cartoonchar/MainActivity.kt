@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("controller", "changed")
             if (destination.id == R.id.navigation_login) {
                 navView.visibility = View.GONE
             } else {
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val runnable = Runnable {
+            navController.navigate(R.id.action_global_navigation_login)
             showTimerDone()
         }
 

@@ -26,5 +26,5 @@
     <fragment
         android:id="@+id/navigation_login"
         android:name="com.example.cartoonchar.ui.login.LoginFragment"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" /><action android:id="@+id/action_global_navigation_login" app:destination="@id/navigation_login"/><action android:id="@+id/action_global_navigation_home" app:destination="@id/navigation_home"/>
 </navigation>

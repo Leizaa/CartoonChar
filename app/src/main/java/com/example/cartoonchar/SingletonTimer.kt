@@ -1,5 +1,6 @@
 package com.example.cartoonchar
 
+import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
@@ -12,40 +13,37 @@ object SingletonTimer {
     //You can supply your own runnable from Fragments
     private lateinit var userRunnable: Runnable
 
-    private var job: Job? = null
+    private var timer: CountDownTimer? = null
 
-    fun init (){
-        val handler = Handler()
+    fun init() {
+        timer = object : CountDownTimer(30000, 1000) {
 
-        job = GlobalScope.launch {
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d("timer", "seconds remaining: " + millisUntilFinished / 1000)
+            }
 
-            handler.postDelayed(updateUi(), 10000)
-
-//            val swipeTimer = Timer("",false)
-//            swipeTimer.schedule(object : TimerTask() {
-//                override fun run() {
-//                    Log.d("timer", "called " + isInitiated)
-//                    handler.post(updateUi())
-//                }
-//            }, 1000, 5000)
-        }
+            override fun onFinish() {
+                Log.d("timer", "done")
+                updateUi()
+            }
+        }.start()
     }
 
-    fun set(runnable : Runnable) {
+    fun set(runnable: Runnable) {
         Log.d("Timer", "A runner was provided")
         userRunnable = runnable
     }
 
     fun reset() {
         Log.d("timer", "reset timer called")
-        if (job != null) {
+        if (timer != null) {
             Log.d("timer", "reset timer!!")
-            job!!.cancel()
+            timer!!.cancel()
             init()
         }
     }
 
-    private fun updateUi(): Runnable{
+    private fun updateUi(): Runnable {
         return userRunnable
     }
 

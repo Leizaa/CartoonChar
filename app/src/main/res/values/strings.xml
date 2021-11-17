@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CartoonChar</string>
     <string name="title_character">Character</string>
-    <string name="title_login">Login</string>
+    <string name="title_login">Log Out</string>
     <string name="title_location">Location</string>
     <string name="location_label">Last known location:</string>
     <string name="seen_label">First seen in:</string>
