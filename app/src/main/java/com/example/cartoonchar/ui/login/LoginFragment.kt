@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.cartoonchar.R
+import com.example.cartoonchar.SingletonTimer
 import com.example.cartoonchar.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +50,7 @@ class LoginFragment : Fragment() {
         viewModel.loginStatus.observe(viewLifecycleOwner){
             binding.loginProgressBar.visibility = View.GONE
             if (it) {
+                SingletonTimer.init()
                 findNavController().navigate(R.id.action_global_navigation_home)
             }
         }
