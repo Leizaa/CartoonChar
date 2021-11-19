@@ -7,6 +7,8 @@ import com.example.cartoonchar.network.model.Location
 
 class LocationAdapter : PagingDataAdapter<Location, LocationViewHolder>(LOCATION_COMPARATOR) {
 
+    var listener : LocationRecyclerViewClickListener? = null
+
     companion object {
         private val LOCATION_COMPARATOR = object : DiffUtil.ItemCallback<Location>() {
             override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean =
@@ -25,6 +27,9 @@ class LocationAdapter : PagingDataAdapter<Location, LocationViewHolder>(LOCATION
         val locationItem = getItem(position)
         if (locationItem != null) {
             holder.bind(locationItem)
+        }
+        holder.itemView.setOnClickListener {
+            listener?.onItemClicked(it,locationItem)
         }
     }
 }

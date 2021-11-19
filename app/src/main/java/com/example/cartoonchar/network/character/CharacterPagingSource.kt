@@ -5,18 +5,20 @@ import androidx.paging.PagingState
 import com.example.cartoonchar.network.CartoonService
 import com.example.cartoonchar.network.model.Character
 import java.io.IOException
+import java.lang.Exception
 
 private const val STARTING_PAGE_INDEX = 1
 
 class CharacterPagingSource(
-    private val service: CartoonService
+    private val service: CartoonService,
+    private val query: String
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         val position = params.key ?: STARTING_PAGE_INDEX;
 
         return try {
-            val response = service.getCharacter(position)
+            val response = service.getCharacter(query, position)
             val characters = response.data
 
             val nextKey = if (characters.isEmpty()) {
@@ -31,7 +33,7 @@ class CharacterPagingSource(
                 nextKey = nextKey
             )
 
-        } catch (exception: IOException) {
+        } catch (exception: Exception) {
             exception.printStackTrace()
             return LoadResult.Error(exception)
         }

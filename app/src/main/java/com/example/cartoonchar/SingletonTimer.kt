@@ -38,8 +38,15 @@ object SingletonTimer {
         Log.d("timer", "reset timer called")
         if (timer != null) {
             Log.d("timer", "reset timer!!")
-            timer!!.cancel()
+            cancel()
             init()
+        }
+    }
+
+    fun cancel() {
+        if (timer != null) {
+            Log.d("timer", "timer killed!!")
+            timer!!.cancel()
         }
     }
 

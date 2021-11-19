@@ -31,13 +31,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_location
             )
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Log.d("controller", "changed")
             if (destination.id == R.id.navigation_login) {
+                SingletonTimer.cancel()
                 navView.visibility = View.GONE
             } else {
                 navView.visibility = View.VISIBLE

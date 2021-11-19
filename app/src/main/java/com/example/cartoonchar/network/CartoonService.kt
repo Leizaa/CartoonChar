@@ -13,6 +13,7 @@ interface CartoonService {
 
     @GET("character")
     suspend fun getCharacter(
+        @Query("name") query: String,
         @Query("page") page: Int
     ): CharacterResponse
 

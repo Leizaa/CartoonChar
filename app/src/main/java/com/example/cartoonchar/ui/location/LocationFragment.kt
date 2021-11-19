@@ -6,28 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cartoonchar.R
 import com.example.cartoonchar.databinding.FragmentLocationBinding
 import com.example.cartoonchar.network.model.Location
+import com.example.cartoonchar.ui.character.CharacterFragmentDirections
 import com.example.cartoonchar.ui.location.recyclerview.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import com.example.cartoonchar.ui.location.LocationViewModel.UiAction;
 import com.example.cartoonchar.ui.location.LocationViewModel.UiState;
+import com.example.cartoonchar.ui.location.recyclerview.LocationRecyclerViewClickListener
 
 @AndroidEntryPoint
-class LocationFragment : Fragment() {
+class LocationFragment : Fragment(), LocationRecyclerViewClickListener {
 
 
     private val locationViewModel: LocationViewModel by viewModels()
     private var _binding: FragmentLocationBinding? = null
+    private val locationAdapter = LocationAdapter()
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var decorator: DividerItemDecoration
@@ -54,7 +60,22 @@ class LocationFragment : Fragment() {
             pagingData = locationViewModel.pagingDataLocationFlow,
             uiActions = locationViewModel.accept
         )
+
+        locationAdapter.listener = this
         return root
+    }
+
+    override fun onItemClicked(view: View, location: Location?) {
+        if (location != null) {
+            Toast.makeText(view.context, "Location : ${location.name}", Toast.LENGTH_SHORT).show()
+            val action =
+                LocationFragmentDirections.actionNavigationLocationToNavigationDetailLocation2(
+                    location.name,
+                    location.type,
+                    location.dimension
+                )
+            findNavController().navigate(action)
+        }
     }
 
     private fun FragmentLocationBinding.bindState(
@@ -62,7 +83,6 @@ class LocationFragment : Fragment() {
         pagingData: Flow<PagingData<Location>>,
         uiActions: (UiAction) -> Unit
     ) {
-        val locationAdapter = LocationAdapter()
         recyclerView.adapter = locationAdapter
 
         bindSearch(
