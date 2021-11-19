@@ -11,14 +11,16 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CartoonRepository @Inject constructor(private val service: CartoonService) {
-    fun getCartoon(): Flow<PagingData<Character>> {
+    fun getCartoon(query: String): Flow<PagingData<Character>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                CharacterPagingSource(service)
+                CharacterPagingSource(
+                    service = service, query = query
+                )
             }
         ).flow
     }

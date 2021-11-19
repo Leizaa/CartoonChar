@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.cartoonchar.ui.character.CharacterFragment"
         android:label="@string/title_character"
-        tools:layout="@layout/fragment_character" />
+        tools:layout="@layout/fragment_character" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_detail_character2"
+            app:destination="@id/navigation_detail_character" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -18,13 +22,67 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_location"
         android:name="com.example.cartoonchar.ui.location.LocationFragment"
         android:label="@string/title_location"
-        tools:layout="@layout/fragment_location" />
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_navigation_location_to_navigation_detail_location2"
+            app:destination="@id/navigation_detail_location" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_login"
         android:name="com.example.cartoonchar.ui.login.LoginFragment"
-        tools:layout="@layout/fragment_login" /><action android:id="@+id/action_global_navigation_login" app:destination="@id/navigation_login"/><action android:id="@+id/action_global_navigation_home" app:destination="@id/navigation_home"/>
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_detail_location"
+        android:name="com.example.cartoonchar.ui.location.LocationDetailFragment"
+        android:label="LocationDetailFragment"
+        tools:layout="@layout/fragment_detail_location">
+        <argument
+            android:name="myName"
+            app:argType="string" />
+        <argument
+            android:name="myType"
+            app:argType="string" />
+        <argument
+            android:name="myDimension"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail_character"
+        android:name="com.example.cartoonchar.ui.character.CharacterDetailFragment"
+        android:label="CharacterDetailFragment"
+        tools:layout="@layout/fragment_detail_character" >
+        <argument
+            android:name="myName"
+            app:argType="string" />
+        <argument
+            android:name="myStatus"
+            app:argType="string" />
+        <argument
+            android:name="myLocation"
+            app:argType="string" />
+        <argument
+            android:name="myUrl"
+            app:argType="string" />
+        <argument
+            android:name="mySeen"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_navigation_login"
+        app:destination="@id/navigation_login" />
+    <action
+        android:id="@+id/action_global_navigation_home"
+        app:destination="@id/navigation_home" />
+    <action
+        android:id="@+id/action_global_navigation_detail"
+        app:destination="@id/navigation_detail_location" />
+    <action
+        android:id="@+id/action_global_character_detail"
+        app:destination="@id/navigation_detail_character" />
 </navigation>

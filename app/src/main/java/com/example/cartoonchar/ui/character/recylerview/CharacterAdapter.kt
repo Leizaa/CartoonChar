@@ -7,6 +7,8 @@ import com.example.cartoonchar.network.model.Character
 
 class CharacterAdapter : PagingDataAdapter<Character, CharacterViewHolder>(CHARACTER_COMPARATOR) {
 
+    var listener: CharacterRecyclerViewClickListener? = null
+
     companion object {
         private val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
             override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
@@ -25,6 +27,9 @@ class CharacterAdapter : PagingDataAdapter<Character, CharacterViewHolder>(CHARA
         val characterItem = getItem(position)
         if (characterItem != null) {
             holder.bind(characterItem)
+        }
+        holder.itemView.setOnClickListener {
+            listener?.onItemClicked(it, characterItem)
         }
     }
 }

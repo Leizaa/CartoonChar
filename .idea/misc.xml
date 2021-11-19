@@ -5,12 +5,14 @@
       <map>
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/activity_main.xml" value="0.17300724637681159" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/character_item_view.xml" value="0.4" />
+        <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_character.xml" value="0.12708333333333333" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_dashboard.xml" value="0.17300724637681159" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_detail.xml" value="0.12708333333333333" />
+        <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_detail_character.xml" value="0.25" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_home.xml" value="0.17300724637681159" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_location.xml" value="0.12158054711246201" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/fragment_login.xml" value="0.12158054711246201" />
-        <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/location_item_view.xml" value="0.4" />
+        <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/layout/location_item_view.xml" value="0.264" />
         <entry key="..\:/work/kotlin android training/CartoonChar/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
       </map>
     </option>

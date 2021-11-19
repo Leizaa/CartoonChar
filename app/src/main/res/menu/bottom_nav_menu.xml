@@ -6,7 +6,7 @@
         android:title="@string/title_character" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_location"
         android:title="@string/title_location" />
 
     <item
