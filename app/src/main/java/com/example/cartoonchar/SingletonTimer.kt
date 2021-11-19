@@ -1,44 +1,43 @@
 package com.example.cartoonchar
 
 import android.os.CountDownTimer
-import android.os.Handler
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.util.*
 
 object SingletonTimer {
     //You can supply your own runnable from Fragments
-    private lateinit var userRunnable: Runnable
+    private lateinit var callback: TimerCallback
 
     private var timer: CountDownTimer? = null
 
     fun init() {
-        timer = object : CountDownTimer(30000, 1000) {
+        if(timer == null) {
+            timer = object : CountDownTimer(30000, 1000) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d("timer", "seconds remaining: " + millisUntilFinished / 1000)
-            }
+                override fun onTick(millisUntilFinished: Long) {
+                    Log.d("timer", "seconds remaining: " + millisUntilFinished / 1000)
+                }
 
-            override fun onFinish() {
-                Log.d("timer", "done")
-                updateUi()
-            }
-        }.start()
+                override fun onFinish() {
+                    callback.timerCallback()
+                    Log.d("timer", "done")
+                }
+            }.start()
+        } else {
+            Log.d("timer", "timer still exist")
+        }
     }
 
-    fun set(runnable: Runnable) {
-        Log.d("Timer", "A runner was provided")
-        userRunnable = runnable
+    fun setCallback(callback: TimerCallback) {
+        Log.d("timer", "A callback was provided")
+        this.callback = callback
     }
 
     fun reset() {
         Log.d("timer", "reset timer called")
         if (timer != null) {
             Log.d("timer", "reset timer!!")
-            cancel()
+            timer!!.cancel()
+            timer = null
             init()
         }
     }
@@ -47,11 +46,12 @@ object SingletonTimer {
         if (timer != null) {
             Log.d("timer", "timer killed!!")
             timer!!.cancel()
+            timer = null
         }
     }
 
-    private fun updateUi(): Runnable {
-        return userRunnable
+    interface TimerCallback {
+        fun timerCallback()
     }
 
 }

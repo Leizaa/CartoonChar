@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SingletonTimer.TimerCallback{
 
     private lateinit var binding: ActivityMainBinding
 
@@ -44,15 +44,7 @@ class MainActivity : AppCompatActivity() {
                 navView.visibility = View.VISIBLE
             }
         }
-
-        val runnable = Runnable {
-            navController.navigate(R.id.action_global_navigation_login)
-            showTimerDone()
-        }
-
-
-        SingletonTimer.set(runnable)
-
+        SingletonTimer.setCallback(this)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
@@ -69,5 +61,12 @@ class MainActivity : AppCompatActivity() {
         super.onUserInteraction()
         Log.d("timer", "user interaction")
         SingletonTimer.reset()
+    }
+
+    override fun timerCallback() {
+        Log.d("timer", "show toast")
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        showTimerDone()
+        navController.navigate(R.id.action_global_navigation_login)
     }
 }
