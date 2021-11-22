@@ -1,7 +1,9 @@
 package com.example.cartoonchar.network.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class Character(
     @SerializedName("id")
     val id: Int,
